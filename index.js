@@ -1,8 +1,8 @@
 const fs = require('fs');
 const path = require('path');
 
-function getInput(name, fallback = '') {
-  return process.env[`INPUT_${name}`] ?? fallback;
+function getInput(inputName, fallback = '') {
+  return process.env[`INPUT_${String(inputName).toUpperCase()}`] ?? fallback;
 }
 
 function isTruthy(value) {
@@ -28,7 +28,8 @@ function setOutput(name, value) {
 }
 
 try {
-  const reportDate = getInput('REPORT_DATE') || new Date().toISOString().slice(0, 10);
+  const defaultUtcDate = new Date().toISOString().slice(0, 10);
+  const reportDate = getInput('REPORT_DATE') || defaultUtcDate;
   const title = getInput('TITLE') || 'Daily EB Report';
   const lines = [`# ${title}`, '', `**Date:** ${reportDate}`, ''];
 
@@ -53,6 +54,6 @@ try {
   setOutput('report_path', reportPath);
   process.stdout.write(`Generated report at ${reportPath}\n`);
 } catch (error) {
-  process.stderr.write(`${error.message}\n`);
+  process.stderr.write(`Error generating report: ${error.message}\n`);
   process.exit(1);
 }
