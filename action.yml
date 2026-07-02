@@ -1,0 +1,37 @@
+name: Daily EB Report
+description: Generate a daily EB report in markdown format.
+inputs:
+  title:
+    description: Report title.
+    required: false
+    default: Daily EB Report
+  report_date:
+    description: Date to include in the report.
+    required: false
+  summary:
+    description: Summary section content.
+    required: false
+  highlights:
+    description: Highlights section content.
+    required: false
+  blockers:
+    description: Blockers section content.
+    required: false
+  next_steps:
+    description: Next steps section content.
+    required: false
+  output_path:
+    description: Optional path for the generated markdown file.
+    required: false
+  write_step_summary:
+    description: Append the generated report to the GitHub step summary.
+    required: false
+    default: "true"
+outputs:
+  report:
+    description: The generated markdown report.
+  report_path:
+    description: The file path where the report was written.
+runs:
+  using: node20
+  main: index.js
